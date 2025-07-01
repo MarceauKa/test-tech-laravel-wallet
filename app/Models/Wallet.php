@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Notifications\LowBalanceWallet;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -11,13 +12,26 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 
 /**
- * @todo Install IDE-helper
- *
- * @property int $balance
+ * @property-read int $balance
+ * @property-read User $user
  */
 class Wallet extends Model
 {
     use HasFactory;
+
+    /**
+     * @todo Move this to a user preference or config
+     */
+    const LOW_BALANCE_THRESHOLD = 1000;
+
+    public static function booted()
+    {
+        static::updated(function (Wallet $model) {
+            if ($model->balance < self::LOW_BALANCE_THRESHOLD) {
+                $model->user->notify(new LowBalanceWallet());
+            }
+        });
+    }
 
     protected function casts(): array
     {
