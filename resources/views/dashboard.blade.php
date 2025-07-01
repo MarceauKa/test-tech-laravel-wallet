@@ -1,3 +1,4 @@
+
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -42,18 +43,17 @@
                                       required />
                         <x-input-error :messages="$errors->get('recipient_email')" class="mt-2" />
                     </div>
-                    <div>
-                        <x-input-label for="amount" :value="__('Amount (€)')" />
-                        <x-text-input id="amount"
-                                      class="block mt-1 w-full"
-                                      type="number"
-                                      min="0"
-                                      step="0.01"
-                                      :value="old('amount')"
-                                      name="amount"
-                                      required />
-                        <x-input-error :messages="$errors->get('amount')" class="mt-2" />
-                    </div>
+
+                            <x-input-label for="frequency_in_days" :value="__('Frequency in days')" />
+                            <x-text-input id="frequency_in_days"
+                                          class="block mt-1 w-full"
+                                          type="number"
+                                          placeholder="30"
+                                          name="frequency_in_days"
+                                          :value="old('frequency_in_days')"
+                            />
+                            <x-input-error :messages="$errors->get('frequency_in_days')" class="mt-2" />
+
                     <div>
                         <x-input-label for="reason" :value="__('Reason')" />
                         <x-text-input id="reason"

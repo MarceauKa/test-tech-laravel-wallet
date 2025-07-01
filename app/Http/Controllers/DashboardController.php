@@ -12,6 +12,7 @@ class DashboardController
     {
         /** @var \App\Models\User $user */
         $user = $request->user();
+        $recurring = $user->recurringTransfers()->with('recipient')->get();
         $transactions = $user->wallet->transactions()->with('transfer')->orderByDesc('id')->get();
         $balance = $user->wallet->balance;
 
