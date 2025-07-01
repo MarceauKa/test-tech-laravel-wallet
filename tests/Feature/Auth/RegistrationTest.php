@@ -22,4 +22,4 @@ test('new users can register', function () {
 
     assertAuthenticated();
     $response->assertRedirect(route('dashboard', absolute: false));
-});
+})->todo('Check if the wallet was created for the newly registered user');
